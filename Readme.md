@@ -1,7 +1,7 @@
 # Assignment
 Write an HTTP server that serves the forecasted weather. Your server should expose an endpoint that:
 1. Accepts latitude and longitude coordinates
-2. Returns the short forecast for that area for Today (“Partly Cloudy” etc)
+2. Returns the short forecast for that area for Today (“Partly Cloudy” etc.)
 3. Returns a characterization of whether the temperature is “hot”, “cold”, or “moderate” (use your discretion on mapping temperatures to each type)
 4. Use the [National Weather Service API Web Service](https://www.weather.gov/documentation/services-web-api) as a data source.
 
@@ -11,10 +11,11 @@ Write an HTTP server that serves the forecasted weather. Your server should expo
 # API
 `/weather-summary?lat=$latitude&lon=$longitude`
 - `GET`
-    - Request Parameters: 
-      - Replace `$latitude` with ...
-      - Replace `$longitude` with ...
-    - Response: Text summary of the weather at the location specified by the provided latitude and longitude.
+    - Request Query Parameters: 
+      - `lat` (replace `$latitude` above): A number (`Double`) representing the decimal latitude of the location for which a weather summary is desired.
+      - `lon` (replace `$longitude` above): A number (`Double`) representing the decimal longitude of the location for which a weather summary is desired.
+    - Response: JSON with a single property, `message`: Text summary of the weather at the specified location.
+    - Example: `curl "http://localhost:8080/weather-summary?lat=39.7456&lon=-97.0892"`
 
 # Improve
 - Testing
@@ -30,9 +31,10 @@ Write an HTTP server that serves the forecasted weather. Your server should expo
   - Represent NOAA's time string more explicitly, perhaps with parsing as Instant
   - Parameter friendliness; e.g. full spelling of "lat/lon", difference in ordering
   - Error message clarity; e.g. lift all possible errors into map for user-facing messages
+  - Offer multiple response formats
 - Developer Friendliness
     - Improve clarity of decoders and encoders (dependent upon philosophies and API translation needs)
-    - Figure out how to huge http4s ecosystem (i.e. circe) to make friendly ADT decoders
+    - Figure out how to huge http4s ecosystem (i.e. circe) to make friendly ADT decoders with less boilerplate
       - Apply to ADTs used in `NOAAWeatherSummaryValue`
     - Make NOAA's "uom" an ADT, or even a batch-updated, data-stored set of `http://codes.wmo.int/common/unit` values
 - Additional API mapping to NOAA resources
